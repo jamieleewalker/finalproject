@@ -1,0 +1,12 @@
+package music.entity;
+
+import lombok.Data;
+
+@Entity
+@Data
+public class Artist {
+	@Id
+	@GeneratedValue(strategy = GenerationType.Identity)
+	
+	
+}

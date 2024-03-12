@@ -1,0 +1,22 @@
+package music.entity;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@Entity
+@Data
+public class Genre {
+	@Id
+	@GeneratedValue(strategy = GenerationType.Identity)
+	
+	private Long genreId;
+	private String genreName;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@ManyToMany(mappedBy = "genres")
+	private Set<Artist> artists = new HashSet<>();
+	}

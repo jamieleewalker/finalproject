@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: music
+    password: music
+    url: jdbc:mysql://localhost:3306/music
+  
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  defer-datasource-initialization: true
+  
+  sql:
+    init:
+      mode: always

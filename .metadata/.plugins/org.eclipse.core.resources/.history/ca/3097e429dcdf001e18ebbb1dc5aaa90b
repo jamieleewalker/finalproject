@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS artist_genre;
+DROP TABLE IF EXISTS genre;
+DROP TABLE IF EXISTS artist;
+DROP TABLE IF EXISTS song;
+
+CREATE TABLE song (
+	song_id int NOT NULL AUTO_INCREMENT,
+	song_title varchar(256) NOT NULL,
+	PRIMARY KEY (song_id)
+);
+
+CREATE TABLE artist (
+	artist_id int NOT NULL AUTO_INCREMENT,
+	song_id int NULL,
+	first_name varchar(60) NOT NULL,
+	last_name varchar(60) NOT NULL,
+	PRIMARY KEY (artist_id),
+	FOREIGN KEY (song_id) REFERENCES song (song_id) ON DELETE CASCADE
+);
+
+CREATE TABLE genre (
+	genre_id int NOT NULL AUTO_INCREMENT,
+	genre_name varchar(128),
+	PRIMARY KEY (genre_id)
+);

@@ -1,0 +1,54 @@
+package music.service;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import music.controller.model.SongData;
+import music.dao.SongDao;
+import music.entity.Song;
+
+@Service
+public class MusicService {
+	@Autowired
+	private SongDao songDao;
+	
+	@Transactional(readOnly = false)
+	public SongData saveSong(SongData songData) {
+		Song song = songData.toSong();
+		Song dbSong = songDao.save(song);
+		
+		return new SongData(dbSong);
+		}
+	
+	@Transactional(readOnly = true)
+	public SongData retrieveSongById(Long songId) {
+		Song song = findSongById(songId);
+		return new SongData(song);
+	}
+	
+	private Song findSongById(Long songId) {
+		return songDao.findById(songId).orelseThrow(() 
+				-> new NoSuchElementException("song with ID=" + songId + " was not found"));
+	}
+	@Transactional(readOnly = true)
+	public List<SongData> retrieveAllSongs() {
+		List<Song> songEntities = songDao.findAll();
+		List<SongData> songDtos = new LinkedList<>();
+		
+		songEntities.sort((son1, son2) -> son1.getSongtitle().compareTo(son2.getSongTitle()));
+		
+		for(Song song : songEntities) {
+			SongData songData = new SongData(song);
+			songDtos.add(songData);
+		}
+		return songDtos;		
+	}
+	
+	@Transactional(readOnly = false)
+	public void deleteSong(Long songId) {
+		Song song = findSongById(songId);
+		songDao.delete(song);
+	}
+}

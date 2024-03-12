@@ -1,0 +1,101 @@
+package music.controller.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import music.entity.Artist;
+import music.entity.Genre;
+import music.entity.Song;
+
+@Data
+@NoArgsConstructor
+public class ArtistData {
+	private Long artistId;
+	private String firstName;
+	private String lastName;
+	private Set<GenreData> genres = new HashSet<>();
+	private Set<SongData> songs = new HashSet<>();
+	
+	public ArtistData(Artist artist) {
+		this.artistId = artist.getArtistId();
+		this.firstName = artist.getFirstName();
+		this.lastName = artist.getLastName();
+		
+		for(Genre genre : artist.getGenres()) {
+			this.genres.add(new GenreData(genre));
+		}
+		for(Song song : artist.getSongs()) {
+			this.songs.add(new SongData(song));
+		}
+
+	}
+	public Artist toArtist() {
+		Artist artist = new Artist();
+		
+		artist.setArtistId(artistId);
+		artist.setFirstName(firstName);
+		artist.setLastName(lastName);
+		
+		for(GenreData genreData : genres) {
+			artist.getGenres().add(genreData.toGenre());
+		}
+		for(SongData songData : songs) {
+			artist.getSongs().add(songData.toSong());
+		}
+		return artist;
+	}
+	
+	
+	@Data
+	@NoArgsConstructor
+	public static class GenreData {
+		private Long genreId;
+		private String genreName;
+		
+		public GenreData(Genre genre) {
+			this.genreId = genre.getGenreId();
+			this.genreName = genre.getGenreName();
+		}
+		
+		public Genre toGenre() {
+			Genre genre = new Genre();
+			
+			genre.setGenreId(genreId);
+			genre.setGenreName(genreName);
+			
+			return genre;
+		}
+	}
+	
+	@Data
+	@NoArgsConstructor
+	public static class SongData {
+		private Long songId;
+		private String songTitle;
+		
+		public SongData(Song song) {
+			this.songId = song.getSongId();
+			this.songTitle = song.getSongTitle();
+			
+		
+		}
+		
+		public SongData(Long songId, String songTitle) {
+			this.songId = songId;
+			this.songTitle = songTitle;
+		}
+		
+		public Song toSong() {
+			Song song = new Song();
+			
+			song.setSongId(songId);
+			song.setSongTitle(songTitle);
+			
+			
+			
+			return song;
+		}
+	}	
+}

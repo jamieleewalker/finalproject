@@ -1,0 +1,5 @@
+package music.controller.model;
+
+public class SongData {
+
+}

@@ -1,0 +1,17 @@
+package music.entity;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Data
+public class Song {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	private Long songId;
+	private String songTitle;
+	
+	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Artist> artists = new HashSet<>();
+}

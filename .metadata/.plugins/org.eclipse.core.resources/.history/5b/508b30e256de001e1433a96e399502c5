@@ -1,0 +1,10 @@
+package music;
+
+public class MusicApplication {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

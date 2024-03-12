@@ -1,0 +1,12 @@
+package music.entity;
+
+
+@Entity
+@Data
+public class Song {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	private Long songId;
+	private String songTitle;
+}

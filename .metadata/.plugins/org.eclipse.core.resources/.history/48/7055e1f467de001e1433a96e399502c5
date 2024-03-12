@@ -1,0 +1,18 @@
+package music.entity;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Data
+public class Genre {
+	@Id
+	@GeneratedValue(strategy = GenerationType.Identity)
+	
+	private Long genreId;
+	private String genreName;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@ManyToMany(mappedBy = "genres")
+	private Set<Artist> artists = new HashSet<>();
+	}

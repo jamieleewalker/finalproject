@@ -1,0 +1,95 @@
+package music.controller.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import music.entity.Artist;
+import music.entity.Song;
+
+@Data
+@NoArgsConstructor
+public class SongData {
+	private Long songId;
+	private String songTitle;
+	private Set<ArtistData> artists = new HashSet<>();
+	
+	public SongData(Song song) {
+		this.songId = song.getSongId();
+		this.songTitle = song.getSongTitle;
+		
+		for(Artist artist : song.getArtists()) {
+			this.artists.add(new ArtistData(artist));
+		}
+	}
+	
+	public SongData(Long songId, String songTitle) {
+		this.songId = songId;
+		this.songTitle = songTitle;
+	}
+	
+	public Song toSong() {
+		Song song = new Song();
+		
+		song.setSongId(songId);
+		song.setsongTitle(songTitle);
+		
+		for(ArtistData artistData : artists) {
+			song.getArtists().add(artistData.toArtist());
+		}
+		
+		return song;
+	}
+	
+	@Data
+	@NoArgsConstructor
+	public class ArtistData {
+		private Long artistId;
+		private String firstName;
+		private String lastName;
+		private Set<GenreData> genres = HashSet<>();
+		
+		public ArtistData(Artist artist) {
+			this.artistId = artist.getArtistId();
+			this.firstName = artist.getFirstName();
+			this.lastName = artist.getLastName();
+			
+			for(Genre genre : artist.getGenres()) {
+				this.genres.add(new GenreData(genre));
+			}
+		}
+		
+		public Artist toArtist() {
+			Artist artist = new Artist();
+			
+			artist.setArtistId(artistId);
+			artist.setFirstName(firstName);
+			artist.setLastName(lastName);
+			
+			for(GenreData genreData : genres) {
+				artist.getGenres().add(genreData.toGenre());
+			}
+			return artist;
+		}
+	}
+	
+	@Data
+	@NoArgsConstructor
+	public class GenreData {
+		private Long genreId;
+		private String genreName;
+		
+		public GenreData(Genre genre) {
+			this.genreId = genre.getGenreId();
+			this.genreName = genre.getGenreName();
+		}
+		
+		public Genre toGenre() {
+			Genre genre = new Genre();
+			
+			genre.setGenreId(genreId);
+			genre.setGenreName(genreName);
+		}
+	}
+}
